@@ -1,0 +1,28 @@
+@media (min-width: 1200px) {
+    
+    .form-container{
+        margin-top: 120px;
+        margin-left: 280px;
+        width: 60%;
+    }
+    button{
+      margin-left: 45%;
+      width: 100px;
+      
+    }
+    input{
+        height: 40px;
+        
+    }
+  }
+
+  @media (max-width: 767px) {
+    .form-container {
+        margin-top: 100px;
+        margin-left: 20px;
+        width: 90%;
+    }
+    button{
+        margin-left: 45%;
+    }
+  }

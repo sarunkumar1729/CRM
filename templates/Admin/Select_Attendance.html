@@ -1,0 +1,30 @@
+{% extends 'Admin/Sidebar.html' %}
+{% load static %}
+{% block title %}Select Attendance{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/Faculty/Attendance.css' %}">
+{% endblock %}
+{% block attendance_active %}active{% endblock %}
+{% block content %}
+
+
+<div class="form">
+
+<form method="post" action="{% url 'Admin_Select_Attendance' %}">
+    {% csrf_token %}
+    <label for="batch">Select Batch:</label>
+    <select name="batch" id="batch" required>
+        {% for batch in batches %}
+            <option value="{{ batch.id }}">{{ batch.name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="date">Select Date:</label><br>
+    <input type="date" id="date" name="date" required><br><br>
+    <button type="submit">View Attendance</button>
+</form>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'Faculty/Sidebar.html' %}
+
+{% load static %}
+{% block title %}Faculty Students{% endblock %}
+{% block style %}
+ <link rel="stylesheet" href="{% static 'css/Admin/Table.css' %}"> 
+{% endblock %}
+
+{% block students_active %}active{% endblock %}
+
+{% block content %}
+<div class="containers">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <br><br>
+                <form method="get" action="{% url 'Search_Faculty_Students' %}">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search Students..." name="q" value="{{ request.GET.q }}">
+                        <div class="input-group-append">
+                            <button style="margin-left: 3px;" class="btn btn-outline-dark" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form><br><br>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col">Reg No</th>
+                            <th scope="col">Avatar</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Batch</th>
+                            <th scope="col">Course</th>
+                            <th scope="col">Qualification</th>
+                            <th scope="col">Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <th scope="row">
+                                {% if student.student %}
+                                    {{ student.student.reg_no }}
+                                {% else %}
+                                    {{ student.reg_no }}
+                                {% endif %}
+                            </th>
+                            <td>
+                                <a href="">
+                                    {% if student.student %}
+                                    <img class="dp" src="{{student.student.admin.profile_pic }}" alt="">
+                                    {% else %}
+                                    <img class="dp" src="{{student.admin.profile_pic }}" alt="">
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td>
+                                    {% if student.student %}
+                                    <a href="{% if student.student.id %}{% url 'Student_Profile' student_id=student.student.id %}{% endif %}">
+                                        {{ student.student.admin.first_name }} {{ student.student.admin.last_name }}</a>
+                                    {% else %}
+                                    <a href="{% if student.id %}{% url 'Student_Profile' student_id=student.id %}{% endif %}">
+                                        {{ student.admin.first_name }} {{ student.admin.last_name }}</a>
+                                    {% endif %}
+                                
+                            </td>
+                            <td>
+                                <a href="">
+                                    {% if student.student %}
+                                        {{ student.student.batch }}
+                                    {% else %}
+                                        {{ student.batch }}
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="">
+                                    {% if student.student %}
+                                        {{ student.student.course.name }}
+                                    {% else %}
+                                        {{ student.course.name }}
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td>
+                                {% if student.student %}
+                                    {{ student.student.educational_qualification }}
+                                {% else %}
+                                    {{ student.educational_qualification }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if student.student %}
+                                    {{ student.student.phone1 }}
+                                {% else %}
+                                    {{ student.phone1 }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

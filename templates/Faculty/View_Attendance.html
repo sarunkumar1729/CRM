@@ -1,0 +1,67 @@
+<!-- Faculty/View_Attendance.html -->
+{% extends 'Faculty/Sidebar.html' %}
+{% load static %}
+{% block title %}View Attendance{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/Admin/Table.css' %}">
+{% endblock %}
+{% block attendance_active %}active{% endblock %}
+{% block content %}
+
+ 
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-9">
+          
+<h5>Attendance Data of  <strong>{{ batch_name}}</strong></h5>
+<p>@<strong> {{ selected_date }}</strong></p><br>
+
+
+<form method="post" action="{% url 'View_Attendance' batch_id selected_date %}">
+  {% csrf_token %}
+{% if attendance_data %}
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr class="table-dark">
+        <th scope="col">Reg No</th>
+        <th scope="col">Avatar</th>
+      <th scope="col">Student Name</th>
+      <th scope="col">Attendance Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for attendance_record in attendance_data %}
+      <tr>
+      <td>{{attendance_record.student.reg_no}}</td>
+      <td><img class="dp" src="{{attendance_record.student.admin.profile_pic}}"  alt=""></td>
+      <td>{{ attendance_record.student.admin.first_name}} {{attendance_record.student.admin.last_name}}</td>
+      <td>
+        <div class="checkbox-wrapper">
+          <input type="checkbox" id="_checkbox-{{attendance_record.student.id }}" name="student_{{attendance_record.student.id}}" {% if attendance_record.status %}checked{% endif %}>
+          <label for="_checkbox-{{attendance_record.student.id }}">
+            <div class="tick_mark"></div>
+          </label>
+        </div>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br><br>
+  <button class="btn btn-dark" type="submit" style="margin-left: 45%;">Update</button>
+
+{% else %}
+  <p>No Attendance data available for the selected date.</p>
+{% endif %}
+</form>
+
+{% if messages %}
+  <div class="message-container">
+    {% for message in messages %}
+      <div class="{% if forloop.last %}latest-message{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+{% endif %}
+
+
+{% endblock %}

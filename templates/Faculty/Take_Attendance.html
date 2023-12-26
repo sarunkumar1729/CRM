@@ -1,0 +1,62 @@
+
+{% extends 'Faculty/Sidebar.html' %}
+
+{% load static %}
+{% block title %}Take Students{% endblock %}
+{% block style %}
+ <link rel="stylesheet" href="{% static 'css/Admin/Table.css' %}"> 
+{% endblock %}
+{% block attendance_active %}active{% endblock %}
+{% block content %}
+
+  
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            
+  <form method="post" action="{% url 'Take_Attendance' batch.id %}">
+    {% csrf_token %}
+    
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr class="table-dark">
+            <th scope="col">Reg No</th>
+            <th scope="col">Avatar</th>
+          <th scope="col">Student Name</th>
+          <th scope="col">Attendance Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+          <tr>
+            <td>{{student.reg_no}}</td>
+            <td><img class="dp" src="{{student.admin.profile_pic}}"  alt=""></td>
+            <td>{{ student.admin.first_name}} {{student.admin.last_name}}</td>
+            <td>
+              <div class="checkbox-wrapper">
+                <input type="checkbox" id="_checkbox-{{ student.id }}" name="student_{{ student.id }}" {% if student.attendance_set.last and student.attendance_set.last.status %}checked{% endif %}>
+                <label for="_checkbox-{{ student.id }}">
+                  <div class="tick_mark"></div>
+                </label>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+    <button class="btn btn-dark" type="submit" style="margin-left: 45%;">Submit</button>
+  </form>
+  {% if messages %}
+  <div class="message-container">
+    {% for message in messages %}
+      <div class="{% if forloop.last %}latest-message{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

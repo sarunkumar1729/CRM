@@ -1,0 +1,32 @@
+{% extends 'Faculty/Sidebar.html' %}
+{% load static %}
+{% block title %}Take Attendance{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/Faculty/Batches.css' %}">
+{% endblock %}
+{% block attendance_active %}active{% endblock %}
+{% block content %}
+
+
+<div class="main-card">
+
+<div class="container-grid">
+    <div class="grid-container" id="applied-jobs">
+        {% for batch in batch %}
+            <div class="job-card">
+                <div class="job-details">
+                    <strong>Batch : </strong>{{batch.name}}<br>
+                    <strong>Course : </strong>{{batch.course}}<br>
+                    <strong>Timing : </strong>{{batch.timing}}<br>
+                    <strong>Start date : </strong>{{batch.start_date}}<br>
+                    <strong>End date : </strong> {{batch.end_date}}
+                </div>
+                <a href="{% url 'View_Attendance_Page' batch.id %}"><button class="view-job-button">View Attendance</button></a>
+                <a href="{% url 'Take_Attendance' batch.id %}"><button class="view-job-button">Take Attendance</button></a>
+            </div>    
+        {% endfor %}                                                                                                                                                        </div>
+
+</div>
+
+
+{%endblock %}

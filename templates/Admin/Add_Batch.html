@@ -1,0 +1,39 @@
+{% extends 'Admin/Sidebar.html' %}
+
+{% load static %}
+{% block title %}Add Batch{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/Admin/Form.css' %}">
+{% endblock %}
+
+
+{% block batches_active %}active{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="form-container">
+  
+
+    <form role="form" method="post" enctype="multipart/form-data" >
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-dark">Add</button>
+    </form>
+  
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    
+    
+</div>
+
+{% endblock %}
+  

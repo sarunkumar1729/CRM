@@ -1,0 +1,57 @@
+{% extends 'Admin/Sidebar.html' %}
+
+{% load static %}
+{% block title %}Assessments{% endblock %}
+{% block style %}
+ <link rel="stylesheet" href="{% static 'css/Admin/Table.css' %}"> 
+{% endblock %}
+
+
+{% block assessment_active %}active{% endblock %}
+
+{% block content %}
+<div class="containers">
+
+
+    <div class="container-fluid">
+      <div class="row">
+    
+          <div class="col-md-9">
+            <br>
+            {% url 'Add_Assessment' as Add_Assessment %}
+             <a href="{{Add_Assessment}}"><h4 class="add" ><button class="button-64" role="button"><span class="text"><h5>Add    <svg  xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M9 12h6" /><path d="M12 9v6" /></svg></h5></span></button>
+            </h4></a>
+            <br><br>
+            		<table class="table table-bordered table-striped">
+                        <thead  >
+                            <tr class="table-dark"> 
+                                <div class="table-color"><th scope="col" >#</th> </div>
+                                <th scope="col">Assessment</th>
+                                <th scope="col">Out of Marks</th>
+                                
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        {% for assessment in assessments %}
+                        <tbody>
+                            <div class="move">
+                            <tr id="1" name="1">
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{ assessment.name }}</td>
+                                <td>{{ assessment.out_of_marks}}</td>
+                                
+                                <td><a href="{% url 'Edit_Assessment' assessment.id %}" data-toggle="modal" data-target="#staffModal"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24"  color="green" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg></a> /
+                                    <a href="{% url 'Delete_Assessment' assessment.id %}" onclick="return confirm('Are you sure you want to delete this assessment ?')"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24"  color="red" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg></a></td>
+                            </tr>
+                            </div>
+                          
+                        </tbody>
+                        {% endfor %}
+                    </table>		 
+        </div>  	
+      </div>	
+    </div>
+    
+    </div>
+
+ {% endblock %}
